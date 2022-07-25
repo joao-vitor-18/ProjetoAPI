@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Cadastro</title>
+
+    <script>
+        function cadastrar(){
+            var usuario = document.getElementById('usuario').value;
+            var email = document.getElementById('email').value;
+            var senha = document.getElementById('senha').value;
+            urle = 'http://127.0.0.1:5000/cadastro?user='+usuario+'&email='+email+'&senha='+senha ;
+
+            $.ajax({
+                url: urle,
+                method: 'post',
+                success: function(resposta){
+                    var mensagem = document.getElementById("msg")
+                    if(resposta['erro'] == 1){
+                        mensagem.className = "alert alert-warning"
+                        mensagem.innerHTML = "Senha com menos de 6 digitos."
+                    }else
+                    if(resposta['erro'] == 2){
+                        mensagem.className = "alert alert-warning"
+                        mensagem.innerHTML = "Usuario já cadastrado no sistema."
+                    }else
+                    if(resposta['erro'] == 3){
+                        mensagem.className = "alert alert-danger"
+                        mensagem.innerHTML = "Erro interno do sistema."
+                    }else
+                    if(resposta['erro'] == 0){
+                        mensagem.className = "alert alert-success"
+                        mensagem.innerHTML = "Usuário cadastrado com sucesso."
+                    }
+                }
+
+
+            })
+        }
+    </script>
+
+</head>
+<body>
+
+    <div class="container" >
+        <div id="msg" role="alert"></div>
+        <div class="row">
+            <div class="col-sm">
+                
+            </div>
+            <div class="col-sm">
+                <div style="text-align:center;">
+                    <h1>CADASTRE-SE</h1>
+                </div>
+                <hr>
+                <p>Usuário</p>
+                <input id="usuario" class="form-control" type="text">
+                <br>
+                <p>E-mail</p>
+                <input id="email" class="form-control" type="text">
+                <br>
+                <p>Senha</p>
+                <input id="senha" class="form-control" type="password">
+                <br>
+                <button onclick="cadastrar()" class="btn btn-success btn-lg">Cadastrar</button>
+
+            </div>
+            <div class="col-sm">
+                
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

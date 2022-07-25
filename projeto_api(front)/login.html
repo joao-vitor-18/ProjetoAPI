@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Login</title>
+
+    <script>
+        function logar(){
+            var email = document.getElementById('email').value;
+            var senha = document.getElementById('senha').value;
+            urle = "http://127.0.0.1:5000/login?email="+email+"&senha="+senha ;
+            $.ajax({
+                url: urle,
+                method: 'post',
+                success: function(resposta){
+                    var mensagem = document.getElementById("msg")
+                    if (resposta['erro'] == 1){
+                        mensagem.className = "alert alert-warning"
+                        mensagem.innerHTML = "Usuário ou senha inválidos"
+                    }else if(respota['erro'] == 2){
+                        mensagem.className = "alert alert-danger"
+                        mensagem.innerHTML = "Erro interno do sistema"
+
+                    }else if(resposta['erro'] == 0){
+                        window.location.replace("http://127.0.0.1:5003");
+                    }
+
+                }
+
+
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="msg" role="alert"></div>
+        <div class="row">
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+                <div style="text-align:center;"><h1>LOGIN</h1></div>
+                <hr>
+                <p>E-mail</p>
+                <input class="form-control" type="text" name="" id="email"><br>
+                <p>Senha</p>
+                <input class="form-control" type="password" id="senha"><br>
+                <button onclick="logar()" class="btn btn-primary btn-lg" >Entrar</button>
+            </div>
+            <div class="col-sm">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
